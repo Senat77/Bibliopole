@@ -1,6 +1,5 @@
 package group.bibliopole.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,7 +7,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "books")
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class Book {
@@ -28,4 +26,13 @@ public class Book {
     private int pages;
 
     private float cost;
+
+    public Book(String name, String author, String publishing, int year, int pages, float cost) {
+        this.name = name;
+        this.author = author;
+        this.publishing = publishing;
+        this.year = year;
+        this.pages = pages;
+        this.cost = cost;
+    }
 }
