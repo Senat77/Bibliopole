@@ -33,8 +33,11 @@
                 </tr>
                 </thead>
                 <tr
-                        th:class="anyClass"
-                        th:each="book : ${books}" th:data-url ="|window.open('${'/book/' + book.id}', '_self')|">
+                        th:class = "anyClass"
+                        th:each= "book : ${books}"
+                        th:data-url="@{/book/{id}(id=${book.id})}"
+                        onclick="window.open(this.getAttribute('data-url'), '_self')"
+                >
 
                     <td data-label="Name" th:text="${book.name}">Наименование</td>
                     <td data-label="Author" th:text="${book.author}">Автор</td>

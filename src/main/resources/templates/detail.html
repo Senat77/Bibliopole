@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--/*/ <th:block th:include="common :: head"></th:block> /*/-->
+</head>
+<body>
+<!--/*/ <th:block th:include="common :: header"></th:block> /*/-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <!-- Edit form -->
+            <form id="edit" th:object="${book}" th:action="@{/book}" method="post">
+
+                <div class="panel panel-primary">
+
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
+                            <span class="noGlypth" aria-hidden="true"></span> Книга
+                        </h2>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <input th:field="*{id}" class="form-control" type="hidden" id="id" name="id"/>
+
+                        <div class="row">
+                            <!-- Part name -->
+                            <div class="form-group col-sm-6">
+                                <label for="name">Наименование</label>
+                                <input th:field="*{name}" type="text" class="form-control" id="name" name="name"
+                                       placeholder="Наименование"/>
+                            </div>
+
+                            <!-- Part amount -->
+                            <div class="form-group col-sm-6">
+                                <label for="author">Автор</label>
+                                <input th:field="*{author}" type="text" pattern="[0-9]*" class="form-control" id="author" name="author"
+                                       placeholder="Количество"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="btn-toolbar">
+                                <span class="btn-toolbar pull-right" role="toolbar">
+                                    <button type="submit" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Сохранить
+                                    </button>
+                                    <a class="btn btn-default" th:classappend="${book.id == null} ? 'hidden'"
+                                       th:href="${'/part/delete/' + book.id}">
+                                       <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>  Удалить
+                                    </a>
+                                    <button type="reset" class="btn btn-default" onclick="window.open('/','_self')">
+                                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>  Отмена
+                                    </button>
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+<!--/*/ <th:block th:include="common :: footer"></th:block> /*/-->
+</body>
+</html>

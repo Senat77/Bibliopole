@@ -17,4 +17,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
                     "lower(b.publishing) like concat ('%', lower(?1), '%')"
     )
     Page<Book> applyFilter(String filter, Pageable pageable);
+
+    Book getById (long id);
 }

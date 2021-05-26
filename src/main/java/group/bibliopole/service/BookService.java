@@ -20,4 +20,8 @@ public class BookService {
     public Page<Book> applyFilter(String filter, Pageable pageable) {
         return repository.applyFilter(filter, pageable);
     }
+
+    public Book getById(Long id) {
+        return repository.getById(id);
+    }
 }

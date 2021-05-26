@@ -3,6 +3,8 @@ package group.bibliopole.controller;
 import group.bibliopole.model.Book;
 import group.bibliopole.repository.BookRepository;
 import group.bibliopole.service.BookService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import static org.springframework.data.domain.Sort.Direction.ASC;
@@ -21,6 +24,8 @@ public class BibliopoleController {
 
     private static final int RECORDS_BY_PAGE = 10;
     private static final String SORT = "name";
+
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     public BibliopoleController(BookService service, BookRepository repository) {
@@ -43,5 +48,12 @@ public class BibliopoleController {
         model.addAttribute("next", pageable.next().getPageNumber());
 
         return "books";
+    }
+
+    @GetMapping("/book/{id}")
+    public String edit(@PathVariable Long id, Model model) {
+        log.info("In edit");
+        model.addAttribute("book", service.getById(id));
+        return "detail";
     }
 }
