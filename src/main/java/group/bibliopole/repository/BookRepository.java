@@ -10,9 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    @Override
-    Page<Book> findAll(Pageable pageable);
-
     @Query (
             "select b from Book b " +
                     "where lower(b.name) like concat ('%', lower(?1), '%') or " +
