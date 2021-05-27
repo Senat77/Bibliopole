@@ -26,18 +26,46 @@
                         <input th:field="*{id}" class="form-control" type="hidden" id="id" name="id"/>
 
                         <div class="row">
-                            <!-- Part name -->
+                            <!-- Name -->
                             <div class="form-group col-sm-6">
                                 <label for="name">Наименование</label>
                                 <input th:field="*{name}" type="text" class="form-control" id="name" name="name"
                                        placeholder="Наименование"/>
                             </div>
 
-                            <!-- Part amount -->
+                            <!-- Author -->
                             <div class="form-group col-sm-6">
                                 <label for="author">Автор</label>
-                                <input th:field="*{author}" type="text" pattern="[0-9]*" class="form-control" id="author" name="author"
-                                       placeholder="Количество"/>
+                                <input th:field="*{author}" type="text" class="form-control" id="author" name="author"
+                                       placeholder="Автор"/>
+                            </div>
+
+                            <!-- Publishing -->
+                            <div class="form-group col-sm-6">
+                                <label for="publishing">Издательство</label>
+                                <input th:field="*{publishing}" type="text" class="form-control" id="publishing" name="publishing"
+                                       placeholder="Издательство"/>
+                            </div>
+
+                            <!-- Year -->
+                            <div class="form-group col-sm-6">
+                                <label for="year">Год издания</label>
+                                <input th:field="*{year}" type="number" min="868" max="2022"  class="form-control" id="year" name="year"
+                                       placeholder="Год издания"/>
+                            </div>
+
+                            <!-- Pages -->
+                            <div class="form-group col-sm-6">
+                                <label for="pages">Кол-во страниц</label>
+                                <input th:field="*{pages}" type="text" pattern="[0-9]*" class="form-control" id="pages" name="pages"
+                                       placeholder="Кол-во страниц"/>
+                            </div>
+
+                            <!-- Cost -->
+                            <div class="form-group col-sm-6">
+                                <label for="cost">Стоимость</label>
+                                <input th:field="*{cost}" type="text" class="form-control" id="cost" name="cost"
+                                       placeholder="Стоимость"/>
                             </div>
                         </div>
                     </div>

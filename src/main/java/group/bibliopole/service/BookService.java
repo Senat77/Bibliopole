@@ -24,4 +24,12 @@ public class BookService {
     public Book getById(Long id) {
         return repository.getById(id);
     }
+
+    public void save(Book book) {
+        repository.save(book);
+    }
+
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
 }
