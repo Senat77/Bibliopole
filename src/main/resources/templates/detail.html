@@ -77,8 +77,7 @@
                                     <button type="submit" class="btn btn-primary">
                                         <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Сохранить
                                     </button>
-                                    <a class="btn btn-default" th:classappend="${book.id == null} ? 'hidden'"
-                                       th:href="${'/part/delete/' + book.id}">
+                                    <a class="btn btn-default" th:classappend="${book.id == null} ? 'hidden'" th:href="${'/part/delete/' + book.id}">
                                        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>  Удалить
                                     </a>
                                     <button type="reset" class="btn btn-default" onclick="window.open('/','_self')">
