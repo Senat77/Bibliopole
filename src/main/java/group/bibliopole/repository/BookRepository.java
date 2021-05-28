@@ -4,8 +4,10 @@ import group.bibliopole.model.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
@@ -20,4 +22,13 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Page<Book> applyFilter(String filter, Integer year, Pageable pageable);
 
     Book getById (long id);
+
+    @Transactional
+    @Modifying
+    @Query (
+            "update Book b " +
+                    "set b.cost = b.cost + b.cost / 100 * ?2 " +
+            "where b.id = ?1"
+    )
+    void changeCost(Long id, Float percent);
 }

@@ -32,4 +32,8 @@ public class BookService {
     public void deleteById(Long id) {
         repository.deleteById(id);
     }
+
+    public void changeCost(Long id, Float percent) {
+        repository.changeCost(id, percent);
+    }
 }

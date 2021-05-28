@@ -37,10 +37,11 @@ public class BibliopoleController {
             Model model,
             @PageableDefault(size = RECORDS_BY_PAGE, sort = SORT, direction = ASC) Pageable pageable
     ) {
-        log.info("In books : query = " + query);
+        log.info("In 'books' method : query = [" + query + "]; year = [" + year + "]");
         Page<Book> books = service.applyFilter((query != null) ? query : "", (year != null) ? year : 868, pageable);
         model.addAttribute("books", books);
         model.addAttribute("query", query);
+        model.addAttribute("year", year);
 
         model.addAttribute("totalPages", books.getTotalPages());
         model.addAttribute("current", pageable.getPageNumber());
@@ -58,7 +59,16 @@ public class BibliopoleController {
     }
 
     @PostMapping("/book")
-    public String save(@ModelAttribute Book book) {
+    public String save (
+            @RequestParam (value = "p", required = false) Float percent,
+            @ModelAttribute Book book
+    ) {
+        if (percent != null) {
+            log.info("In 'save' method : book.id = [" + book.getId() + "]; percent = [" + percent + "]");
+            service.changeCost(book.getId(), percent);
+            service.save(book);
+            return "detail";
+        }
         service.save(book);
         return "redirect:/";
     }
@@ -70,7 +80,7 @@ public class BibliopoleController {
         return "detail";
     }
 
-    @GetMapping("/part/delete/{id}")
+    @GetMapping("/book/delete/{id}")
     public String delete(@PathVariable Long id) {
         service.deleteById(id);
         return "redirect:/";

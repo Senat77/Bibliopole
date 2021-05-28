@@ -90,16 +90,18 @@
                     </ul>
 
                     <!-- Percent -->
-                    <div class="panel-footer">
+                    <div class="panel-footer" th:classappend="${book.id == null} ? 'hidden'">
                         <form action="/" method="get">
                             <div class="row">
                                 <div class="col-xs-6">
                                     <div class="input-group input-group-sm">
 
-                            <span class="input-group-addon" id="sizing-addon4">
-                                <span class="glyphicon glyphicon-usd"></span>
-                            </span>
-                                        <input th:value="${percent}" id="percent" name="p" type="number" step="0.01" min="0.01" max="1000" class="form-control" aria-describedby="sizing-addon3"
+                                        <span class="input-group-addon" id="sizing-addon4">
+                                            <span class="glyphicon glyphicon-usd"></span>
+                                        </span>
+                                        <input th:value="${percent}" id="percent" name="p" type="number"
+                                               step="0.01" min="-99.99" max="1000" class="form-control"
+                                               aria-describedby="sizing-addon3"
                                                placeholder="Введите процент изменения стоимости"/>
                                     </div>
                                 </div>
