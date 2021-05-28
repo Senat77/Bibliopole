@@ -10,9 +10,7 @@ import static org.mapstruct.NullValueCheckStrategy.ALWAYS;
 import static org.mapstruct.NullValueMappingStrategy.RETURN_DEFAULT;
 import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
 
-@Mapper (nullValueCheckStrategy = ALWAYS,
-        nullValueMappingStrategy = RETURN_DEFAULT,
-        nullValuePropertyMappingStrategy = IGNORE)
+@Mapper
 public interface BookMapper {
 
     BookRespDTO fromBook (Book book);

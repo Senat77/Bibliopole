@@ -4,7 +4,7 @@ spring:
     active: h2
 
   datasource:
-    url: jdbc:h2:mem:books
+    url: jdbc:h2:mem:bibliopole
     driverClassName: org.h2.Driver
     username: sa
     password:
