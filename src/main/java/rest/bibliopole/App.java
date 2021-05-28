@@ -1,7 +1,7 @@
-package group.bibliopole;
+package rest.bibliopole;
 
-import group.bibliopole.model.Book;
-import group.bibliopole.repository.BookRepository;
+import rest.bibliopole.model.Book;
+import rest.bibliopole.repository.BookRepository;
 import org.h2.tools.Server;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -32,10 +32,10 @@ public class App {
     public CommandLineRunner demo(BookRepository repository) {
         return (args) -> {
             repository.saveAll(Arrays.asList(
-                    new Book("Кобзарь", "Тарас Шевченко", "Украинские сувениры", 2021, 500, 5018),
-                    new Book("Хребты безумия", "Говард Лавкрафт", "Азбука", 2020, 64, 333.51f),
-                    new Book("Книга власти", "Шан Ян", "Бука", 1999, 312, 51.99f),
-                    new Book("Облачный атлас", "Дэвид Митчелл", "Укркнига", 1998, 544, 128)
+                    new Book("Кобзарь", "Тарас Шевченко", "Украинские сувениры", 2021, 500, 5018d),
+                    new Book("Хребты безумия", "Говард Лавкрафт", "Азбука", 2020, 64, 333.51),
+                    new Book("Книга власти", "Шан Ян", "Бука", 1999, 312, 51.99d),
+                    new Book("Облачный атлас", "Дэвид Митчелл", "Укркнига", 1998, 544, 128d)
             ));
         };
     }
