@@ -21,7 +21,7 @@ public class BibliopoleRestController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    static final String REST_URL = "/";
+    static final String REST_URL = "";
 
     @Autowired
     public BibliopoleRestController(BookService service, BookRepository repository) {
