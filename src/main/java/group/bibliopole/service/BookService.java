@@ -17,8 +17,8 @@ public class BookService {
         this.repository = repository;
     }
 
-    public Page<Book> applyFilter(String filter, Pageable pageable) {
-        return repository.applyFilter(filter, pageable);
+    public Page<Book> applyFilter(String filter, Integer year, Pageable pageable) {
+        return repository.applyFilter(filter, year, pageable);
     }
 
     public Book getById(Long id) {

@@ -13,9 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import static org.springframework.data.domain.Sort.Direction.ASC;
 
 @Controller
@@ -36,10 +33,12 @@ public class BibliopoleController {
     @GetMapping("/")
     public String books (
             @RequestParam (value = "q", required = false) String query,
+            @RequestParam (value = "y", required = false) Integer year,
             Model model,
             @PageableDefault(size = RECORDS_BY_PAGE, sort = SORT, direction = ASC) Pageable pageable
     ) {
-        Page<Book> books = service.applyFilter((query != null) ? query : "", pageable);
+        log.info("In books : query = " + query);
+        Page<Book> books = service.applyFilter((query != null) ? query : "", (year != null) ? year : 868, pageable);
         model.addAttribute("books", books);
         model.addAttribute("query", query);
 

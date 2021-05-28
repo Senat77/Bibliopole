@@ -70,7 +70,9 @@
                                 <span class="glyphicon glyphicon-search"></span>
                             </span>
                             <input th:value="${query}" id="query" name="q" type="text" class="form-control" aria-describedby="sizing-addon3"
-                                   placeholder="Введите строку поиска и нажмите 'Enter'"/>
+                                   placeholder="Введите строку поиска (Наименование, Автор, Издательство)"/>
+                            <input th:value="${year}" id="year" name="y"  type="number" min="868" max="2022"class="form-control" aria-describedby="sizing-addon3"
+                                   placeholder="Введите начальный год издания"/>
                         </div>
                     </div>
                     <div class="col-xs-6">
