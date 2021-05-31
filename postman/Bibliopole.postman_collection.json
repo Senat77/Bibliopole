@@ -24,6 +24,50 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/books/100002",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"books",
+								"100002"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Новая книга\",\r\n    \"author\": \"Новый автор\",\r\n    \"publishing\": \"Новое издательство\",\r\n    \"year\": 2000,\r\n    \"pages\": 2000,\r\n    \"cost\": 2000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/books",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"books"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
