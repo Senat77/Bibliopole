@@ -37,7 +37,7 @@ public class BibliopoleRestController {
         return service.getAll();
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public BookRespDTO get(@PathVariable("id") Integer id) throws EntityNotFoundException {
         log.info("get restaurant with id = {}", id);
         return service.get(id);
