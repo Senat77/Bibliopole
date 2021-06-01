@@ -8,14 +8,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import rest.bibliopole.model.Book;
 import rest.bibliopole.model.dto.BookReqDTO;
 import rest.bibliopole.model.dto.BookRespDTO;
 import rest.bibliopole.repository.BookRepository;
 import rest.bibliopole.service.BookService;
+import rest.bibliopole.util.exception.EntityAlreadyExistsException;
 import rest.bibliopole.util.exception.EntityNotFoundException;
 
-import java.nio.charset.Charset;
 import java.util.List;
 
 @RestController
@@ -46,7 +45,8 @@ public class BibliopoleRestController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> create (@Validated(BookReqDTO.New.class) @RequestBody BookReqDTO bookDTO) {
+    public ResponseEntity<?> create (@Validated(BookReqDTO.New.class) @RequestBody BookReqDTO bookDTO)
+            throws EntityAlreadyExistsException {
         log.info("Create book {}", bookDTO);
         return new ResponseEntity<> (service.create(bookDTO), HttpStatus.CREATED);
     }

@@ -12,6 +12,7 @@ import rest.bibliopole.model.dto.BookRespDTO;
 import rest.bibliopole.repository.BookRepository;
 import rest.bibliopole.service.mapper.BookMapper;
 import rest.bibliopole.util.exception.EntityNotFoundException;
+import rest.bibliopole.util.exception.EntityAlreadyExistsException;
 
 import java.util.List;
 import java.util.Optional;
@@ -45,8 +46,10 @@ public class BookService {
     }
 
     @Transactional
-    public BookRespDTO create(BookReqDTO bookDTO) {
+    public BookRespDTO create(BookReqDTO bookDTO) throws EntityAlreadyExistsException {
         Assert.notNull(bookDTO, "Book must not be null");
+        if(repository.findByNameAndAuthorAndPublishingAndYear(bookDTO.getName(), bookDTO.getAuthor(), bookDTO.getPublishing(), bookDTO.getYear()) != null)
+            throw new EntityAlreadyExistsException();
         Book book = mapper.toBook(bookDTO);
         repository.save(book);
         log.info("Book created : {}", book);

@@ -8,9 +8,12 @@ import java.util.List;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer> {
+
     List<Book> findByNameContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndPublishingContainingIgnoreCaseAndYearGreaterThanEqual (
             String name,
             String author,
             String publishing,
             Integer year);
+
+    Book findByNameAndAuthorAndPublishingAndYear(String name, String author, String publishing, Integer year);
 }
