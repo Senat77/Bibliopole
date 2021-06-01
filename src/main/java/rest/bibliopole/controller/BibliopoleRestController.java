@@ -8,12 +8,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import rest.bibliopole.model.Book;
 import rest.bibliopole.model.dto.BookReqDTO;
 import rest.bibliopole.model.dto.BookRespDTO;
 import rest.bibliopole.repository.BookRepository;
 import rest.bibliopole.service.BookService;
 import rest.bibliopole.util.exception.EntityNotFoundException;
 
+import java.nio.charset.Charset;
 import java.util.List;
 
 @RestController
@@ -57,8 +59,25 @@ public class BibliopoleRestController {
 
     @PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public BookRespDTO update (@RequestBody BookReqDTO bookDTO,
-                                     @PathVariable("id") Integer id) throws EntityNotFoundException {
+                               @PathVariable("id") Integer id) throws EntityNotFoundException {
+        log.info("Update book id = {} with data = {}", id, bookDTO);
         bookDTO.setId(id);
         return service.update(bookDTO);
+    }
+
+    @PatchMapping(value = "/{id}")
+    public BookRespDTO newCost(@RequestParam(value = "percent", required = true) Double percent,
+                               @PathVariable("id") Integer id) throws EntityNotFoundException {
+        log.info("New cost for book id = {} , percent = {}", id, percent);
+        return service.newCost(id, percent);
+    }
+
+    @GetMapping(value = "/filter")
+    public List<BookRespDTO> filter(@RequestParam(value = "name", defaultValue = "") String name,
+                                    @RequestParam(value = "author", defaultValue = "") String author,
+                                    @RequestParam(value = "publishing", defaultValue = "") String publishing,
+                                    @RequestParam(value = "year", defaultValue = "868") Integer year) {
+        log.info("Filter for name = {}, author = {}, publishing = {}, year >= {}", name, author, publishing, year);
+        return service.filter(name, author, publishing, year);
     }
 }

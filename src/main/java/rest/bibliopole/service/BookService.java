@@ -69,4 +69,17 @@ public class BookService {
         log.debug("[i] Book with id={} updated : {}", book.getId(), book);
         return mapper.fromBook(book);
     }
+
+    @Transactional
+    public BookRespDTO newCost(Integer id, Double percent) throws EntityNotFoundException {
+        Book book =findById(id);
+        book.setCost(book.getCost() + book.getCost() / 100 * percent);
+        return mapper.fromBook(book);
+    }
+
+    public List<BookRespDTO> filter(String name, String author, String publishing, Integer year) {
+        return mapper
+                .fromBooks(repository
+                        .findByNameContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndPublishingContainingIgnoreCaseAndYearGreaterThanEqual(name, author, publishing, year));
+    }
 }
