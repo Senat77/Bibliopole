@@ -48,4 +48,17 @@ public class BibliopoleRestController {
         log.info("Create book {}", bookDTO);
         return new ResponseEntity<> (service.create(bookDTO), HttpStatus.CREATED);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable ("id") Integer id) throws EntityNotFoundException {
+        log.info("Delete book id = {}", id);
+        service.delete(id);
+    }
+
+    @PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public BookRespDTO update (@RequestBody BookReqDTO bookDTO,
+                                     @PathVariable("id") Integer id) throws EntityNotFoundException {
+        bookDTO.setId(id);
+        return service.update(bookDTO);
+    }
 }

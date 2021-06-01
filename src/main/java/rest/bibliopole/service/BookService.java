@@ -52,4 +52,21 @@ public class BookService {
         log.info("Book created : {}", book);
         return mapper.fromBook(book);
     }
+
+    @Transactional
+    public void delete (int id) throws EntityNotFoundException {
+        if (repository.existsById(id))
+            repository.deleteById(id);
+        else
+            throw new EntityNotFoundException();
+    }
+
+    @Transactional
+    public BookRespDTO update(BookReqDTO bookDTO) throws EntityNotFoundException {
+        Assert.notNull(bookDTO, "Book must not be null");
+        Book book = findById(bookDTO.getId());
+        mapper.toUpdate(book,bookDTO);
+        log.debug("[i] Book with id={} updated : {}", book.getId(), book);
+        return mapper.fromBook(book);
+    }
 }
