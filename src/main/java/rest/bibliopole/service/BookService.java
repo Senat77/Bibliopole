@@ -23,17 +23,21 @@ public class BookService {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private BookMapper mapper;
+    private final BookMapper mapper;
+
+    private final BookRepository repository;
 
     @Autowired
-    private BookRepository repository;
+    public BookService(BookMapper mapper, BookRepository repository) {
+        this.mapper = mapper;
+        this.repository = repository;
+    }
 
     public List<BookRespDTO> getAll() {
         return mapper.fromBooks(repository.findAll());
     }
 
-    public BookRespDTO get(Integer id)  throws EntityNotFoundException {
+    public BookRespDTO get(Integer id) throws EntityNotFoundException {
         return mapper.fromBook(findById(id));
     }
 
@@ -48,7 +52,8 @@ public class BookService {
     @Transactional
     public BookRespDTO create(BookReqDTO bookDTO) throws EntityAlreadyExistsException {
         Assert.notNull(bookDTO, "Book must not be null");
-        if(repository.findByNameAndAuthorAndPublishingAndYear(bookDTO.getName(), bookDTO.getAuthor(), bookDTO.getPublishing(), bookDTO.getYear()) != null)
+        if(repository.findByNameAndAuthorAndPublishingAndYear(bookDTO.getName(), bookDTO.getAuthor(),
+                bookDTO.getPublishing(), bookDTO.getYear()) != null)
             throw new EntityAlreadyExistsException();
         Book book = mapper.toBook(bookDTO);
         repository.save(book);
@@ -75,7 +80,7 @@ public class BookService {
 
     @Transactional
     public BookRespDTO newCost(Integer id, Double percent) throws EntityNotFoundException {
-        Book book =findById(id);
+        Book book = findById(id);
         book.setCost(book.getCost() + book.getCost() / 100 * percent);
         return mapper.fromBook(book);
     }

@@ -1,18 +1,16 @@
 package rest.bibliopole;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import rest.bibliopole.model.Book;
-import rest.bibliopole.repository.BookRepository;
 import org.h2.tools.Server;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import rest.bibliopole.repository.BookRepository;
 import rest.bibliopole.util.DemoData;
 
 import java.sql.SQLException;
-import java.util.Arrays;
 
 @SpringBootApplication
 public class App {
