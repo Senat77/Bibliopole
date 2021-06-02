@@ -2,6 +2,7 @@ package rest.bibliopole.controller;
 
 import org.junit.Test;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MvcResult;
@@ -9,7 +10,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import rest.bibliopole.model.dto.BookReqDTO;
 import rest.bibliopole.model.dto.BookRespDTO;
+import rest.bibliopole.util.DemoData;
 import rest.bibliopole.util.exception.EntityNotFoundException;
+
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.*;
@@ -58,10 +62,12 @@ public class BibliopoleRestControllerTest extends AbstractRestControllerTest {
                 2000, 1000, 1000.0);
         String inputJson = super.mapToJson(bookReqDTO);
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(BibliopoleRestController.REST_URL)
-                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson))
+                .contentType(MediaType.APPLICATION_JSON_UTF8).content(inputJson))
                 .andExpect(status().isCreated())
                 .andReturn();
-        String content = mvcResult.getResponse().getContentAsString();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        response.setCharacterEncoding("UTF-8");
+        String content = response.getContentAsString();
         BookRespDTO bookRespDTO = super.mapFromJson(content, BookRespDTO.class);
         assertEquals(bookRespDTO.getName(), "Новая книга");
         assertEquals(2000, (int) bookRespDTO.getYear());
@@ -69,15 +75,47 @@ public class BibliopoleRestControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void delete() {
+    public void delete() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.delete(BibliopoleRestController.REST_URL + "/100001")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void update() {
+    public void update() throws Exception {
+        BookReqDTO bookReqDTO = new BookReqDTO(DemoData.BOOK2.getName(),
+                DemoData.BOOK2.getAuthor(),
+                DemoData.BOOK2.getPublishing(),
+                DemoData.BOOK2.getYear(),
+                DemoData.BOOK2.getPages(),
+                DemoData.BOOK2.getCost());
+        bookReqDTO.setPublishing("Новое издательство");
+        String inputJson = super.mapToJson(bookReqDTO);
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.patch(BibliopoleRestController.REST_URL + "/100002")
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson))
+                .andExpect(status().isOk())
+                .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        response.setCharacterEncoding("UTF-8");
+        String content = response.getContentAsString();
+        BookRespDTO bookRespDTO = super.mapFromJson(content, BookRespDTO.class);
+        assertEquals(bookRespDTO.getName(), DemoData.BOOK2.getName());
+        assertEquals(bookRespDTO.getPublishing(), "Новое издательство");
     }
 
     @Test
-    public void newCost() {
+    public void newCost() throws Exception {
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.patch(BibliopoleRestController.REST_URL
+                + "/new_cost/100003")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .param("percent", "10.0"))
+                .andExpect(status().isOk())
+                .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        response.setCharacterEncoding("UTF-8");
+        String content = response.getContentAsString();
+        BookRespDTO bookRespDTO = super.mapFromJson(content, BookRespDTO.class);
+        assertEquals(Optional.of(90.0), bookRespDTO.getCost());
     }
 
     @Test

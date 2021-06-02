@@ -65,7 +65,7 @@ public class BibliopoleRestController {
         return service.update(bookDTO);
     }
 
-    @PatchMapping(value = "/{id}")
+    @PatchMapping(value = "/new_cost/{id}")
     public BookRespDTO newCost(@RequestParam(value = "percent", required = true) Double percent,
                                @PathVariable("id") Integer id) throws EntityNotFoundException {
         log.info("New cost for book id = {} , percent = {}", id, percent);
