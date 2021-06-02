@@ -23,7 +23,7 @@ import java.util.List;
 public class BookRepositoryTest {
 
     @Autowired
-    BookRepository repository;
+    private BookRepository repository;
 
     @Test
     public void findByNameContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndPublishingContainingIgnoreCaseAndYearGreaterThanEqual() {
@@ -42,6 +42,7 @@ public class BookRepositoryTest {
 
     @Test
     public void findByNameAndAuthorAndPublishingAndYear() {
+
         Book book = repository.findByNameAndAuthorAndPublishingAndYear("Книга власти", "Шан Ян", "Бука", 1999);
         assertNotNull(book);
         assertEquals(book, DemoData.BOOK3);

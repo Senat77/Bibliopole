@@ -26,4 +26,6 @@ public interface BookMapper {
     Book toUpdate(@MappingTarget Book book, BookReqDTO bookDTO);
 
     Book toBook(BookReqDTO bookDTO);
+
+    List<Book> toBooks (List<BookRespDTO> books);
 }

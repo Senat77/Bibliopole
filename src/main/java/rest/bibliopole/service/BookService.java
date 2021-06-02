@@ -23,15 +23,20 @@ public class BookService {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private final BookMapper mapper;
+    @Autowired
+    private BookMapper mapper;
 
-    private final BookRepository repository;
+    @Autowired
+    private BookRepository repository;
 
+    /*
     @Autowired
     public BookService(BookMapper mapper, BookRepository repository) {
         this.mapper = mapper;
         this.repository = repository;
     }
+
+     */
 
     public List<BookRespDTO> getAll() {
         return mapper.fromBooks(repository.findAll());
