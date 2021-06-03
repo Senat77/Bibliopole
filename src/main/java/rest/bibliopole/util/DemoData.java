@@ -3,11 +3,13 @@ package rest.bibliopole.util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AutoPopulatingList;
 import rest.bibliopole.model.Book;
 import rest.bibliopole.model.dto.BookReqDTO;
 import rest.bibliopole.repository.BookRepository;
 import rest.bibliopole.service.mapper.BookMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Profile({"h2"})

@@ -202,11 +202,12 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/100003?percent=10",
+							"raw": "{{base_url}}/new_cost/100003?percent=10",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"new_cost",
 								"100003"
 							],
 							"query": [
@@ -284,7 +285,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/filter?publishing=ука&year=2020",
+							"raw": "{{base_url}}/filter?publishing=кни&year=1996",
 							"host": [
 								"{{base_url}}"
 							],
@@ -294,11 +295,11 @@
 							"query": [
 								{
 									"key": "publishing",
-									"value": "ука"
+									"value": "кни"
 								},
 								{
 									"key": "year",
-									"value": "2020"
+									"value": "1996"
 								}
 							]
 						}

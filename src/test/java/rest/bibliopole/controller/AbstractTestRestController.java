@@ -21,7 +21,7 @@ import java.io.IOException;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AbstractRestControllerTest {
+public class AbstractTestRestController {
 
     @Autowired
     protected MockMvc mvc;

@@ -27,7 +27,7 @@ public class App {
     }
 
     // https://stackoverflow.com/questions/9318116/how-to-run-h2-database-in-server-mode
-    // url : jdbc:h2:tcp://localhost:9092/mem:bibliopole
+    // url : jdbc:h2:tcp://localhost:9092/mem:bibliopole;DB_CLOSE_ON_EXIT=TRUE
     @Bean(initMethod = "start", destroyMethod = "stop")
     @Profile("!test")
     public Server h2Server() throws SQLException {

@@ -13,18 +13,19 @@ import rest.bibliopole.model.dto.BookRespDTO;
 import rest.bibliopole.util.DemoData;
 import rest.bibliopole.util.exception.EntityNotFoundException;
 
-import java.util.Optional;
+import java.io.UnsupportedEncodingException;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.core.Is.*;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SqlGroup({@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD,
         scripts = {"/testdata/books.sql"})})
-public class BibliopoleRestControllerTest extends AbstractRestControllerTest {
+public class BibliopoleRestControllerTest extends AbstractTestRestController {
 
     @Test
     public void getAll() throws Exception {
@@ -65,10 +66,7 @@ public class BibliopoleRestControllerTest extends AbstractRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON_UTF8).content(inputJson))
                 .andExpect(status().isCreated())
                 .andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        response.setCharacterEncoding("UTF-8");
-        String content = response.getContentAsString();
-        BookRespDTO bookRespDTO = super.mapFromJson(content, BookRespDTO.class);
+        BookRespDTO bookRespDTO = mapFromJson(getResultContent(mvcResult), BookRespDTO.class);
         assertEquals(bookRespDTO.getName(), "Новая книга");
         assertEquals(2000, (int) bookRespDTO.getYear());
         assertEquals(100005, (int) bookRespDTO.getId());
@@ -95,10 +93,7 @@ public class BibliopoleRestControllerTest extends AbstractRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson))
                 .andExpect(status().isOk())
                 .andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        response.setCharacterEncoding("UTF-8");
-        String content = response.getContentAsString();
-        BookRespDTO bookRespDTO = super.mapFromJson(content, BookRespDTO.class);
+        BookRespDTO bookRespDTO = mapFromJson(getResultContent(mvcResult), BookRespDTO.class);
         assertEquals(bookRespDTO.getName(), DemoData.BOOK2.getName());
         assertEquals(bookRespDTO.getPublishing(), "Новое издательство");
     }
@@ -108,17 +103,29 @@ public class BibliopoleRestControllerTest extends AbstractRestControllerTest {
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.patch(BibliopoleRestController.REST_URL
                 + "/new_cost/100003")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .param("percent", "10.0"))
+                .param("percent", "-10.0"))
                 .andExpect(status().isOk())
                 .andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        response.setCharacterEncoding("UTF-8");
-        String content = response.getContentAsString();
-        BookRespDTO bookRespDTO = super.mapFromJson(content, BookRespDTO.class);
-        assertEquals(Optional.of(90.0), bookRespDTO.getCost());
+        BookRespDTO bookRespDTO = mapFromJson(getResultContent(mvcResult), BookRespDTO.class);
+        assertTrue(90.0 == bookRespDTO.getCost());
     }
 
     @Test
-    public void filter() {
+    public void filter() throws Exception {
+        mvc.perform(get(BibliopoleRestController.REST_URL + "/filter")
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("author", "лав")
+                .param("year", "2000"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].name", is("Хребты безумия")))
+                .andExpect(jsonPath("$[0].author", is("Говард Лавкрафт")))
+                .andExpect(jsonPath("$[0].year", is(2020)));
+    }
+
+    private String getResultContent (MvcResult result) throws UnsupportedEncodingException {
+        MockHttpServletResponse response = result.getResponse();
+        response.setCharacterEncoding("UTF-8");
+        return response.getContentAsString();
     }
 }
