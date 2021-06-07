@@ -29,15 +29,6 @@ public class BookService {
     @Autowired
     private BookRepository repository;
 
-    /*
-    @Autowired
-    public BookService(BookMapper mapper, BookRepository repository) {
-        this.mapper = mapper;
-        this.repository = repository;
-    }
-
-     */
-
     public List<BookRespDTO> getAll() {
         return mapper.fromBooks(repository.findAll());
     }
